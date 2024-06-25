@@ -13,6 +13,7 @@ dotnet ef migrations add InitialCreate
 
 ```
 dotnet user-secrets set SeedUserPW <PW>
+dotnet user-secrets set Secret <Secret>
 ```
 
 ### Running in different environments
@@ -20,8 +21,8 @@ dotnet user-secrets set SeedUserPW <PW>
 Update [appsettings.json](appsettings.json) for `Production`, [appsettings.Development.json](appsettings.Development.json) for `Development` and [appsettings.Staging.json](appsettings.Staging.json) for `Staging` respectively. The `ASPNETCORE_ENVIRONMENT` is set to the respective environment.
 
 ```
-dotnet run --launch-profile https --environment Development
-dotnet run --launch-profile https --environment Production
+dotnet run --environment Development
+dotnet run --environment Production
 ```
 
 ### Users
@@ -30,6 +31,10 @@ dotnet run --launch-profile https --environment Production
 manager@contoso.com
 admin@contoso.com
 ```
+
+### Authorization
+
+Happens on model directly and access controls for different users is defined in [Authorization](Authorization)
 
 #### Update migrations ( Not required )
 

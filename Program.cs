@@ -3,12 +3,24 @@
 #elif DEFAULT
 #region snippet
 using System.Security.Claims;
+using AuthorizationClaims.Data;
 using Microsoft.AspNetCore.Authorization;
-using WebAll;
+using Microsoft.EntityFrameworkCore;
+using AuthorizationClaims;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRazorPages();
 builder.Services.AddControllersWithViews();
+
+if(builder.Environment.IsDevelopment()){
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+        // options.UseSqlServer(connectionString)
+        options.UseSqlite(connectionString)
+        // options.UseInMemoryDatabase("StopList")
+        );
+    builder.Services.AddSwaggerGen();
+}
 
 builder.Services.AddAuthorization(options =>
 {
@@ -25,7 +37,11 @@ builder.Services.AddSingleton<IAuthorizationHandler, MinimumAgeHandler>();
 
 var app = builder.Build();
 
-if (!app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment()){
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+else
 {
     app.UseExceptionHandler("/Error");
     app.UseHsts();

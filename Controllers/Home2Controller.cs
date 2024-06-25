@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using WebAll.Models;
+using AuthorizationClaims.Models;
 
-namespace WebAll.Controllers
+namespace AuthorizationClaims.Controllers
 {
     public class Home2Controller : Controller
     {

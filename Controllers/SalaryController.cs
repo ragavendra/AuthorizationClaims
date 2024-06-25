@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebAll.Controllers
+namespace AuthorizationClaims.Controllers
 {
     #region snippet
     [Authorize(Policy = "EmployeeOnly")]

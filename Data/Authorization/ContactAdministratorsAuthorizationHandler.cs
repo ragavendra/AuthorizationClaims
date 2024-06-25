@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
-using ContactManager.Models;
+using AuthorizationClaims.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
 
-namespace ContactManager.Authorization
+namespace AuthorizationClaims.Authorization
 {
     // Authentication based on model
     public class ContactAdministratorsAuthorizationHandler

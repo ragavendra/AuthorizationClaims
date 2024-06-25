@@ -1,3 +1,4 @@
+// claim based
 #define DEFAULT // ALT DEFAULT
 #if NEVER
 #elif DEFAULT
@@ -6,26 +7,42 @@ using Microsoft.EntityFrameworkCore;
 using ContactManager.Data;
 using Microsoft.AspNetCore.Authorization;
 using ContactManager.Authorization;
+using ContactManager.Services;
+using ContactManager.Middlewares;
 
 // snippet3 used in next define
 #region snippet4
-#region snippet2
-#region snippet
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    // options.UseSqlServer(connectionString)
-    options.UseSqlite(connectionString)
-    // options.UseInMemoryDatabase("StopList")
-    );
-builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+builder.Services.AddControllers();
+
+if (builder.Environment.IsDevelopment())
+{
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+        // options.UseSqlServer(connectionString)
+        options.UseSqlite(connectionString)
+        // options.UseInMemoryDatabase("StopList")
+        );
+    builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+    builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddSwaggerGen();
+}
+else if (builder.Environment.IsProduction())
+{
+    // update to postgres or mssql
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+        // options.UseSqlServer(connectionString)
+        options.UseSqlite(connectionString)
+        // options.UseInMemoryDatabase("StopList")
+        );
+}
 
 builder.Services.AddDefaultIdentity<IdentityUser>(
     options => options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
-#endregion
 
 builder.Services.AddRazorPages();
 
@@ -35,7 +52,6 @@ builder.Services.AddAuthorization(options =>
         .RequireAuthenticatedUser()
         .Build();
 });
-#endregion
 
 // Authorization handlers.
 builder.Services.AddScoped<IAuthorizationHandler,
@@ -46,6 +62,15 @@ builder.Services.AddSingleton<IAuthorizationHandler,
 
 builder.Services.AddSingleton<IAuthorizationHandler,
                       ContactManagerAuthorizationHandler>();
+
+builder.Services.AddCors();
+builder.Services.AddControllers();
+
+// configure strongly typed settings object
+// builder.Services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+
+// configure DI for application services
+builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 
@@ -67,6 +92,8 @@ using (var scope = app.Services.CreateScope())
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 else
 {
@@ -85,7 +112,20 @@ app.UseAuthorization();
 
 app.MapRazorPages();
 
+app.MapControllers();
+
+// global cors policy
+app.UseCors(x => x
+    .AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader());
+
+// custom jwt auth middleware
+app.UseMiddleware<JwtMiddleware>();
+
 app.Run();
+
+// scope based
 #elif ALT
 #region snippet3
 using Microsoft.AspNetCore.Identity;

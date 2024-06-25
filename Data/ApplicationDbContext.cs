@@ -1,9 +1,8 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using ContactManager.Models;
-using ContactManager.Entities;
+using AuthorizationClaims.Models;
 
-namespace ContactManager.Data;
+namespace AuthorizationClaims.Data;
 
 public class ApplicationDbContext : IdentityDbContext
 {
@@ -14,8 +13,6 @@ public class ApplicationDbContext : IdentityDbContext
     {
     }
     public DbSet<Contact> Contact { get; set; }
-
-    public DbSet<User> User { get; set; }
 
     public DbSet<TodoItem> TodoItems { get; set; } = null!;
 

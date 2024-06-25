@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace WebAll.Pages
+namespace AuthorizationClaims.Pages
 {
     // /x/salary?handler=paystub
     // /x/salary/paystub

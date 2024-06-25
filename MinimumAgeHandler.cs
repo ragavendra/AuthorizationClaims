@@ -1,7 +1,7 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 
-namespace WebAll
+namespace AuthorizationClaims
 {
 
     public class MinimumAgeHandler : AuthorizationHandler<MinimumAgeRequirement>

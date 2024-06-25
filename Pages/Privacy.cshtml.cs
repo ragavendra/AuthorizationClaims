@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace WebAll.Pages
+namespace AuthorizationClaims.Pages
 {
     public class PrivacyModel : PageModel
     {

@@ -1,11 +1,10 @@
-﻿using ContactManager.Authorization;
-using ContactManager.Entities;
-using ContactManager.Models;
+﻿using AuthorizationClaims.Authorization;
+using AuthorizationClaims.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 // dotnet aspnet-codegenerator razorpage -m Contact -dc ApplicationDbContext -outDir Pages\Contacts --referenceScriptLibraries
-namespace ContactManager.Data
+namespace AuthorizationClaims.Data
 {
     public static class SeedData
     {
@@ -94,41 +93,10 @@ namespace ContactManager.Data
         #region snippet1
         public static void SeedDB(ApplicationDbContext context, string adminID)
         {
-            if (context.Contact.Any() && context.TodoItems.Any())
+            if (context.Contact.Any())
             {
                 return;   // DB has been seeded
             }
-
-            context.TodoItems.AddRange(
-                new TodoItem
-                {
-                    Name = "Item 1",
-                    IsComplete = false
-                },
-                new TodoItem
-                {
-                    Name = "Item 2",
-                    IsComplete = true
-                },
-                new TodoItem
-                {
-                    Name = "Item 3",
-                    IsComplete = false
-                },
-                new TodoItem
-                {
-                    Name = "Item 4",
-                    IsComplete = false
-                }
-            );
-            context.SaveChanges();
-
-            context.User.AddRange(
-              new User { Id = 1, FirstName = "First 1", LastName = "Last 1", Username = "first1", Password = "test" },
-              new User { Id = 2, FirstName = "First 2", LastName = "Last 2", Username = "first2", Password = "test" },
-              new User { Id = 3, FirstName = "First 3", LastName = "Last 2", Username = "first3", Password = "test" }
-            );
-            context.SaveChanges();
 
             context.Contact.AddRange(
             #region snippet_Contact

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace WebAll.Pages
+namespace AuthorizationClaims.Pages
 {
     #region snippet
     [Authorize(Policy = "EmployeeOnly")]

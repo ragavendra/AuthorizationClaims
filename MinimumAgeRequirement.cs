@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 
-namespace WebAll
+namespace AuthorizationClaims
 {
     public class MinimumAgeRequirement : IAuthorizationRequirement
     {
