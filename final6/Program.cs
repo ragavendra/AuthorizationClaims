@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using ContactManager.Authorization;
 using ContactManager.Services;
 using ContactManager.Middlewares;
+using Microsoft.OpenApi.Models;
 
 // snippet3 used in next define
 #region snippet4
@@ -26,7 +27,34 @@ if (builder.Environment.IsDevelopment())
         );
     builder.Services.AddDatabaseDeveloperPageExceptionFilter();
     builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
+    builder.Services.AddSwaggerGen(opt =>
+{
+    opt.SwaggerDoc("v1", new OpenApiInfo { Title = "MyAPI", Version = "v1" });
+    opt.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Description = "Please enter token",
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        BearerFormat = "JWT",
+        Scheme = "bearer"
+    });
+    opt.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type=ReferenceType.SecurityScheme,
+                    Id="Bearer"
+                }
+            },
+            new string[]{}
+        }
+    });
+});
+
 }
 else if (builder.Environment.IsProduction())
 {
@@ -39,10 +67,12 @@ else if (builder.Environment.IsProduction())
         );
 }
 
+/*
 builder.Services.AddDefaultIdentity<IdentityUser>(
     options => options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+*/
 
 builder.Services.AddRazorPages();
 
@@ -53,6 +83,7 @@ builder.Services.AddAuthorization(options =>
         .Build();
 });
 
+/*
 // Authorization handlers.
 builder.Services.AddScoped<IAuthorizationHandler,
                       ContactIsOwnerAuthorizationHandler>();
@@ -62,6 +93,7 @@ builder.Services.AddSingleton<IAuthorizationHandler,
 
 builder.Services.AddSingleton<IAuthorizationHandler,
                       ContactManagerAuthorizationHandler>();
+*/
 
 builder.Services.AddCors();
 builder.Services.AddControllers();
@@ -106,9 +138,9 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthentication();
+// app.UseAuthentication();
 
-app.UseAuthorization();
+// app.UseAuthorization();
 
 app.MapRazorPages();
 

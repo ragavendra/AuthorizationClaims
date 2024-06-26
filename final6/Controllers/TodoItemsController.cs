@@ -13,12 +13,13 @@ public class TodoItemsController : ControllerBase
 {
     private readonly ApplicationDbContext _context;
 
-    protected UserManager<IdentityUser> UserManager { get; }
+    // protected UserManager<IdentityUser> UserManager { get; }
 
-    public TodoItemsController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
+    // public TodoItemsController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
+    public TodoItemsController(ApplicationDbContext context)
     {
         _context = context;
-        UserManager = userManager;
+        // UserManager = userManager;
     }
 
     // GET: api/TodoItems

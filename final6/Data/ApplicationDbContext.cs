@@ -15,7 +15,7 @@ public class ApplicationDbContext : IdentityDbContext
     }
     public DbSet<Contact> Contact { get; set; }
 
-    public DbSet<User> User { get; set; }
+    public DbSet<User> User { get; set; } = null!;
 
     public DbSet<TodoItem> TodoItems { get; set; } = null!;
 

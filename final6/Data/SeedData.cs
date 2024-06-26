@@ -21,14 +21,16 @@ namespace ContactManager.Data
                 // dotnet user-secrets set SeedUserPW <pw>
                 // The admin user can do anything
 
+                /*
+
                 var adminID = await EnsureUser(serviceProvider, testUserPw, "admin@contoso.com");
                 await EnsureRole(serviceProvider, adminID, Constants.ContactAdministratorsRole);
 
                 // allowed user can create and edit contacts that they create
                 var managerID = await EnsureUser(serviceProvider, testUserPw, "manager@contoso.com");
                 await EnsureRole(serviceProvider, managerID, Constants.ContactManagersRole);
-
-                SeedDB(context, adminID);
+*/
+                SeedDB(context, "");
             }
         }
 
@@ -94,7 +96,7 @@ namespace ContactManager.Data
         #region snippet1
         public static void SeedDB(ApplicationDbContext context, string adminID)
         {
-            if (context.Contact.Any() && context.TodoItems.Any())
+            if (context.Contact.Any() && context.TodoItems.Any() && context.User.Any())
             {
                 return;   // DB has been seeded
             }
@@ -124,9 +126,9 @@ namespace ContactManager.Data
             context.SaveChanges();
 
             context.User.AddRange(
-              new User { Id = 1, FirstName = "First 1", LastName = "Last 1", Username = "first1", Password = "test" },
-              new User { Id = 2, FirstName = "First 2", LastName = "Last 2", Username = "first2", Password = "test" },
-              new User { Id = 3, FirstName = "First 3", LastName = "Last 2", Username = "first3", Password = "test" }
+              new User { FirstName = "First 1", LastName = "Last 1", Username = "first1", Password = "test" },
+              new User { FirstName = "First 2", LastName = "Last 2", Username = "first2", Password = "test" },
+              new User { FirstName = "First 3", LastName = "Last 2", Username = "first3", Password = "test" }
             );
             context.SaveChanges();
 

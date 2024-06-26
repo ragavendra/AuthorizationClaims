@@ -399,3 +399,6 @@ FodyWeavers.xsd
 *.sln.iml
 *.db
 *.db
+*.db*
+*.db*.*
+*.db.*

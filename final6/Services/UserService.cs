@@ -10,6 +10,7 @@ using ContactManager.Entities;
 using ContactManager.Middlewares;
 using ContactManager.Models;
 using ContactManager.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace ContactManager.Services
 {
@@ -32,14 +33,16 @@ namespace ContactManager.Services
 
     private readonly IConfiguration _configuration;
 
-    public UserService(IConfiguration configuration)
+    public UserService(IConfiguration configuration, ApplicationDbContext context)
     {
       _configuration = configuration;
+      _context = context;
     }
 
     public AuthenticateResponse Authenticate(AuthenticateRequest model)
     {
-      var user = _users.SingleOrDefault(x => x.Username == model.Username && x.Password == model.Password);
+      // var user = _users.SingleOrDefault(x => x.Username == model.Username && x.Password == model.Password);
+      var user = _context.User.SingleOrDefault(x => x.Username == model.Username && x.Password == model.Password);
 
       // return null if user not found
       if (user == null) return null;
@@ -52,7 +55,10 @@ namespace ContactManager.Services
 
     public IEnumerable<User> GetAll()
     {
-      return _users;
+      // return _users;
+      return _context.User
+      // .Select(x => x)
+      .ToList();
     }
 
     public User GetById(int id)

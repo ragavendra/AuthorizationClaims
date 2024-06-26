@@ -18,6 +18,7 @@ namespace ContactManager.Controllers
             _logger = logger;
         }
 
+/*
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
@@ -28,6 +29,6 @@ namespace ContactManager.Controllers
                 Summary = Summaries[Random.Shared.Next(Summaries.Length)]
             })
             .ToArray();
-        }
+        }*/
     }
 }
